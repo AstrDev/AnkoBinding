@@ -1,0 +1,5 @@
+<resources>
+	<string name="app_name">AnkoBinding</string>
+
+	<string name="text_view_placeholder">Press button to generate some</string>
+</resources>
