@@ -10,27 +10,11 @@ class UserViewModel(private val user: User) : AnkoBaseObservable<MainActivityUI.
     val names: Array<String> = arrayOf("Michael", "Sherwood", "Don", "Lowell", "Lindsay", "Otis", "Hilton", "Luke", "Raleigh", "Lino")
     val surnames: Array<String> = arrayOf("Pines", "Boston", "Harpin", "Soles", "Folkerts", "Mohan", "Botsford", "Casto", "Cornette", "Liddle")
 
-    var name: String
-        get() = user.name
-        set(value) {
-            user.name = value
-            notifyDataChanged(MainActivityUI.id.Name)
-        }
+    var name: String by bindingObservable(MainActivityUI.id.Name, user.name)
 
-    var surname: String
-        get() = user.surname
-        set(value) {
-            user.surname = value
-            notifyDataChanged(MainActivityUI.id.Surname)
-        }
+    var surname: String by bindingObservable(MainActivityUI.id.Surname, user.surname)
 
-    var age: Int
-        get() = user.age
-        set(value) {
-            user.age = value
-            notifyDataChanged(MainActivityUI.id.Age)
-        }
-
+    var age: Int by bindingObservable(MainActivityUI.id.Age, user.age)
 
     fun generate() {
         name = names.random()

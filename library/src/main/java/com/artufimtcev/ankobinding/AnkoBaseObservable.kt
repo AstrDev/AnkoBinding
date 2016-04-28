@@ -1,6 +1,7 @@
 package com.artufimtcev.ankobinding
 
 import java.util.*
+import kotlin.reflect.KProperty
 
 open class AnkoBaseObservable<ID : Enum<ID>> : AnkoObservable<ID> {
 
@@ -24,5 +25,25 @@ open class AnkoBaseObservable<ID : Enum<ID>> : AnkoObservable<ID> {
 
     override fun unregisterObserver(observer: AnkoObserver<ID>) {
         observers.remove(observer)
+    }
+
+
+    protected fun <T> bindingObservable(id: ID, initialValue: T) : ObservablePropertyDelegate<T> {
+        return ObservablePropertyDelegate(id, initialValue)
+    }
+
+
+    inner class ObservablePropertyDelegate<T>(val id: ID, initialValue: T) {
+
+        var value: T = initialValue
+
+        operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
+            return value
+        }
+
+        operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
+            this.value = value
+            notifyDataChanged(id)
+        }
     }
 }
